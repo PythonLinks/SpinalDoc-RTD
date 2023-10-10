@@ -2,37 +2,22 @@
 
 Foreword
 ========
+ SpinalHDL is an open source hardware description language which generates VHDL, Verilog or System Verilog.   It includes an extensible list of design rule checkers, and important software technologies such as classes, inheritance and static type checking.  SpinalHDL is written in Scala, which runs on the Java virtual machine.
 
-Preliminary notes:
-
-* All the following statements will be about describing digital hardware.
-  Verification is another tasty topic.
-* For conciseness, let's assume that SystemVerilog is a recent revision of
-  Verilog.
-* When reading this, we should not underestimate how much our attachment for our
-  favourite HDL will bias our judgement.
-
-
-Why moving away from traditional HDL
+Comparison with Verilog, System Verilog and VHDL
 ------------------------------------
 
-VHDL/Verilog aren't Hardware Description Languages
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In contrast to SpinalHDL, the Verilogs (Verilog and System Verilog)  and VHDL were originally simulation languages, which can now “magically” synthesise hardware, including hardware which would violate the SpinalHDL design rules.    It is hard enough to debug FPGAs and ASICs.  We really do need all the help we can get from modern software technologies, particularly when dealing with large amounts of complexity, such as supporting multiple designs from a single code base. 
 
-Those languages are event driven languages created initially for
-simulation/documentation purposes. Only in a second time they were used as
-inputs languages for synthesis tools. Which explain the roots of a lot of the
-following points.
+To illustrate the advantages of SpinalHDL, let us look at some examples. First a word about Verilog. 
 
+Verilog and System Verilog
+------------------------------------
+Say you are building a register machine, and need an array of vectors of bits.  One vector for each register.  It is hard to believe, but Verilog does not let you pass a multi-dimensional array into a module. So for the rest of this page when we say Verilog, we really mean system Verilog. 
 
-Event driven paradigm doesn't make any sense for RTL
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-When you think about it, describing digital hardware (RTL) by using
-process/always blocks doesn't make any practical senses. Why do we have to worry
-about a sensitivity list? Why do we have to split our design between
-processes/always blocks of different natures (combinatorial logic / register
-without reset / register with async reset)?
+VHDL
+------------------------------------
+ 
 
 For instance, to implement this:
 
@@ -89,9 +74,6 @@ Using SpinalHDL you write this:
        myRegister          := myRegister + 1
        myRegisterWithReset := myRegisterWithReset + 1
    }
-
-As for everything, you can get used to this event driven semantic, until you
-taste something better.
 
 
 Recent revisions of VHDL and Verilog aren't usable
